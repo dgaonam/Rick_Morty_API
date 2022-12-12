@@ -21,14 +21,13 @@ const ListApi = ({ idRequest }) => {
     const [url, setUrl] = useState('/api/character/' + idRequest);
     const [isDisabled, setIsDisabled ] =useState();
     const [pageSize,setPageSize]= useState();
+    const [textButton,setTextButton] = useState('paginacion ON');
 
-    const handlePageSizeChange = (event: ChangeEvent<HTMLSelectElement>) => {
-        const pageSize = Number(event.target.value);
     
-        setPageSize(pageSize);
-      };
 
-    const handleDisableClick = () => {
+    const handleDisableClick = (event) => {
+        //(oldState) => !oldState setTextButton('paginacion ON')
+        setTextButton(event.target.textContent==="paginacion ON" ? "paginacion OFF":"paginacion ON");
         return setIsDisabled((oldState) => !oldState);
       };
 
@@ -89,12 +88,7 @@ const ListApi = ({ idRequest }) => {
                     </Container>
                 </Paginator>
                 <Center w="full">
-                    <Button onClick={handleDisableClick}>Disable ON / OFF</Button>
-                    <Select w={40} ml={3} onChange={handlePageSizeChange}>
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                    </Select>
+                    <Button onClick={handleDisableClick}>{textButton}</Button>
                 </Center>
             </>
         );
