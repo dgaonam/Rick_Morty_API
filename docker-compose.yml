@@ -1,0 +1,22 @@
+version: '3.3'
+services:
+  calculadora:
+    container_name: Rick_Morty_API
+    image: node:16
+    build:
+      context: ./
+    volumes:
+      - ./:/frontend
+    working_dir: /frontend
+    ports:
+      - 3000:3000
+    stdin_open: true
+    command: npm start
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - rick-network
+
+networks:
+  rick-network:
+    external: true
