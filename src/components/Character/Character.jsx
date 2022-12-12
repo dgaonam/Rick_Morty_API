@@ -26,6 +26,14 @@ const Character = ({ id, name, img, episode, species, status }) => {
                 >
                     <GridItem rowSpan={1} colSpan={1}>
                         <Link key={id} to={`/characters/${id}`}>
+                        <Stack mt='6' spacing='3'>
+                                <Heading size='md'>{id}
+                                </Heading>
+                            </Stack>
+                        </Link>
+                    </GridItem>
+                    <GridItem rowSpan={1} colSpan={1}>
+                        <Link key={id} to={`/characters/${id}`}>
                             <Image
                                 src={img}
                                 alt={name}
@@ -33,8 +41,7 @@ const Character = ({ id, name, img, episode, species, status }) => {
                             />
                         </Link>
                     </GridItem>
-
-                    <GridItem colSpan={3} rowSpan={1} >
+                    <GridItem colSpan={2} rowSpan={1} >
                         <Link key={id} to={`/characters/${id}`}>
                             <Stack mt='6' spacing='3'>
                                 <Heading size='md'>Nombre: {name} <br />
@@ -50,7 +57,6 @@ const Character = ({ id, name, img, episode, species, status }) => {
                             ))}
                         </OrderedList>
                     </GridItem>
-                    
                 </Grid>
             </CardBody>
         </Card>

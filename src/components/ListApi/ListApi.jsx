@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import Character from "../Character"
 import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import {Button,Center,Select} from "@chakra-ui/react";
 import {
     Paginator,
     Container,
@@ -18,25 +19,18 @@ const ListApi = ({ idRequest }) => {
     const [paginas, setPaginas] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const [url, setUrl] = useState('/api/character/' + idRequest);
+    const [isDisabled, setIsDisabled ] =useState();
+    const [pageSize,setPageSize]= useState();
 
-    const siguientePagina = () => {
-        if (currentPage <= paginas) {
-            setCurrentPage(currentPage + 1)
-            console.log(currentPage);
-        } else {
-            console.log("llegaste a la ultima pagina");
-        }
-    }
-    const anteriorPagina = () => {
-        if (currentPage > 1) {
-            setCurrentPage(currentPage - 1)
-            console.log(currentPage);
-        } else {
-            console.log("llegaste a la primer pagina");
-        }
-    }
+    const handlePageSizeChange = (event: ChangeEvent<HTMLSelectElement>) => {
+        const pageSize = Number(event.target.value);
+    
+        setPageSize(pageSize);
+      };
 
-    const pageNumbers = [...Array(paginas + 1).keys()].slice(1)
+    const handleDisableClick = () => {
+        return setIsDisabled((oldState) => !oldState);
+      };
 
     const obtenerApi = () => {
 
@@ -80,6 +74,7 @@ const ListApi = ({ idRequest }) => {
                     pagesQuantity={paginas}
                     currentPage={currentPage}
                     onPageChange={setCurrentPage}
+                    isDisabled={isDisabled}
                 >
                     <Container align="center" justify="space-between" w="full" p={4}>
                         <Previous>
@@ -93,6 +88,14 @@ const ListApi = ({ idRequest }) => {
                         </Next>
                     </Container>
                 </Paginator>
+                <Center w="full">
+                    <Button onClick={handleDisableClick}>Disable ON / OFF</Button>
+                    <Select w={40} ml={3} onChange={handlePageSizeChange}>
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                    </Select>
+                </Center>
             </>
         );
     };
@@ -105,7 +108,7 @@ const ListApi = ({ idRequest }) => {
                 <Character key={character.id} id={character.id} name={character.name} episode={[]} img={character.image} species={character.species} status={character.status} />
             );
         }) : <>
-            <Link to="/">Regresar</Link>
+            <Button ><Link to="/">Regresar</Link></Button>
             <Character key={data.id} id={data.id} name={data.name} episode={data.episode} img={data.image} species={data.species} status={data.status} />
         </>
 
